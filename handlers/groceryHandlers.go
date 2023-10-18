@@ -23,3 +23,23 @@ func AddGroceryItem(c *gin.Context) {
 
   c.JSON(http.StatusCreated, newItem)
 }
+
+// Fetch a specific grocery item by ID
+func GetGroceryItem(c *gin.Context) {
+  id, _ := strconv.Atoi(c.Param("id"))
+
+  for _, item := range data.GroceryDB {
+    if item.ID == id {
+      c.JSON(http.StatusOK, item)
+      return
+    }
+  }
+
+  c.JSON(http.StatusNotFound, gin.H{"message": "Item not found"})
+}
+
+// List all grocery items
+func ListGroceryItems(c *gin.Context) {
+  c.JSON(http.StatusOK, data.GroceryDB)
+}
+

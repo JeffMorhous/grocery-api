@@ -66,3 +66,19 @@ func UpdateGroceryItem(c *gin.Context) {
   c.JSON(http.StatusNotFound, gin.H{"message": "Item not found"})
 }
 
+// Delete a specific grocery item by ID
+func DeleteGroceryItem(c *gin.Context) {
+  id, _ := strconv.Atoi(c.Param("id"))
+
+  for index, item := range data.GroceryDB {
+    if item.ID == id {
+      // Remove item from our "database"
+      data.GroceryDB = append(data.GroceryDB[:index], data.GroceryDB[index+1:]...)
+      c.JSON(http.StatusOK, gin.H{"message": "Item deleted successfully"})
+      return
+    }
+  }
+
+  c.JSON(http.StatusNotFound, gin.H{"message": "Item not found"})
+}
+

@@ -15,6 +15,7 @@ func main() {
   r.GET("/groceries", handlers.ListGroceryItems)
   r.GET("/groceries/:id", handlers.GetGroceryItem)
   r.PUT("/groceries/:id", handlers.UpdateGroceryItem)
+  r.DELETE("/groceries/:id", handlers.DeleteGroceryItem)
 
   r.Run() // default listens on :8080
 }

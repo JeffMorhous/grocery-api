@@ -14,6 +14,7 @@ func main() {
   // New GET routes
   r.GET("/groceries", handlers.ListGroceryItems)
   r.GET("/groceries/:id", handlers.GetGroceryItem)
+  r.PUT("/groceries/:id", handlers.UpdateGroceryItem)
 
   r.Run() // default listens on :8080
 }

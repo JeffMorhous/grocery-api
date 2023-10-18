@@ -43,3 +43,26 @@ func ListGroceryItems(c *gin.Context) {
   c.JSON(http.StatusOK, data.GroceryDB)
 }
 
+// Update a specific grocery item by ID
+func UpdateGroceryItem(c *gin.Context) {
+  id, _ := strconv.Atoi(c.Param("id"))
+
+  var updatedItem models.GroceryItem
+  if err := c.ShouldBindJSON(&updatedItem); err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    return
+  }
+
+  for index, item := range data.GroceryDB {
+    if item.ID == id {
+      data.GroceryDB[index].Name = updatedItem.Name
+      data.GroceryDB[index].Count = updatedItem.Count
+      data.GroceryDB[index].Category = updatedItem.Category
+      c.JSON(http.StatusOK, data.GroceryDB[index])
+      return
+    }
+  }
+
+  c.JSON(http.StatusNotFound, gin.H{"message": "Item not found"})
+}
+
